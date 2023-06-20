@@ -4,18 +4,18 @@ const { serializeActor } = require('../models/actor');
 const getActorById = (req, res) => {
     const id = req.params.id;
     const query = `
-    SELECT
-        actor.*,
-        GROUP_CONCAT(DISTINCT movie.name) AS movies
-    FROM
-        actor
-        LEFT JOIN movie_actor_through ON actor.id = movie_actor_through.actor_id
-        LEFT JOIN movie ON movie.id = movie_actor_through.movie_id
-    WHERE
-        actor.id = ?
-    GROUP BY
-        actor.id
-`;
+        SELECT
+            actor.*,
+            GROUP_CONCAT(DISTINCT movie.name) AS movies
+        FROM
+            actor
+            LEFT JOIN movie_actor_through ON actor.id = movie_actor_through.actor_id
+            LEFT JOIN movie ON movie.id = movie_actor_through.movie_id
+        WHERE
+            actor.id = ?
+        GROUP BY
+            actor.id
+        `;
     db.query(query, [id], (err, results) => {
         if (err) {
             console.error('Error executing query:', err);
@@ -74,7 +74,5 @@ const getAllActors = (req, res) => {
     });
 };
 
-const getMovieByActor = (req, res) => {
-}; 
 
-module.exports = { getMovieByActor, getActorById, getAllActors };
+module.exports = { getActorById, getAllActors };

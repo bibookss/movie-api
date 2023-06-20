@@ -4,24 +4,24 @@ const { serializeMovie } = require('../models/movie');
 exports.getMovieById = (req, res) => {
 	const id = req.params.id;
 	const query = `
-    SELECT
-		movie.*,
-		GROUP_CONCAT(DISTINCT genre.name) AS genres,
-		GROUP_CONCAT(DISTINCT director.name) AS directors,
-		GROUP_CONCAT(DISTINCT actor.name) AS actors
-    FROM
-		movie
-		LEFT JOIN movie_genre_through ON movie.id = movie_genre_through.movie_id
-		LEFT JOIN genre ON genre.id = movie_genre_through.genre_id
-		LEFT JOIN movie_director_through ON movie.id = movie_director_through.movie_id
-		LEFT JOIN director ON director.id = movie_director_through.director_id
-		LEFT JOIN movie_actor_through ON movie.id = movie_actor_through.movie_id
-		LEFT JOIN actor ON actor.id = movie_actor_through.actor_id
-    WHERE
-      	movie.id = ?
-    GROUP BY
-      	movie.id
-  `;
+		SELECT
+			movie.*,
+			GROUP_CONCAT(DISTINCT genre.name) AS genres,
+			GROUP_CONCAT(DISTINCT director.name) AS directors,
+			GROUP_CONCAT(DISTINCT actor.name) AS actors
+		FROM
+			movie
+			LEFT JOIN movie_genre_through ON movie.id = movie_genre_through.movie_id
+			LEFT JOIN genre ON genre.id = movie_genre_through.genre_id
+			LEFT JOIN movie_director_through ON movie.id = movie_director_through.movie_id
+			LEFT JOIN director ON director.id = movie_director_through.director_id
+			LEFT JOIN movie_actor_through ON movie.id = movie_actor_through.movie_id
+			LEFT JOIN actor ON actor.id = movie_actor_through.actor_id
+		WHERE
+			movie.id = ?
+		GROUP BY
+			movie.id
+	`;
 	db.query(query, [id], (err, results) => {
 		if (err) {
 			console.error('Error executing query:', err);
@@ -50,23 +50,23 @@ exports.getAllMovies = (req, res) => {
 	const queryParams = [offset, parseInt(pageSize)];
 
 	const query = `
-    SELECT
-		movie.*,
-		GROUP_CONCAT(DISTINCT genre.name) AS genres,
-		GROUP_CONCAT(DISTINCT director.name) AS directors,
-		GROUP_CONCAT(DISTINCT actor.name) AS actors
-    FROM
-		movie
-		LEFT JOIN movie_genre_through ON movie.id = movie_genre_through.movie_id
-		LEFT JOIN genre ON genre.id = movie_genre_through.genre_id
-		LEFT JOIN movie_director_through ON movie.id = movie_director_through.movie_id
-		LEFT JOIN director ON director.id = movie_director_through.director_id
-		LEFT JOIN movie_actor_through ON movie.id = movie_actor_through.movie_id
-		LEFT JOIN actor ON actor.id = movie_actor_through.actor_id
-    GROUP BY
-		movie.id
-	LIMIT ?, ?
-  `;
+		SELECT
+			movie.*,
+			GROUP_CONCAT(DISTINCT genre.name) AS genres,
+			GROUP_CONCAT(DISTINCT director.name) AS directors,
+			GROUP_CONCAT(DISTINCT actor.name) AS actors
+		FROM
+			movie
+			LEFT JOIN movie_genre_through ON movie.id = movie_genre_through.movie_id
+			LEFT JOIN genre ON genre.id = movie_genre_through.genre_id
+			LEFT JOIN movie_director_through ON movie.id = movie_director_through.movie_id
+			LEFT JOIN director ON director.id = movie_director_through.director_id
+			LEFT JOIN movie_actor_through ON movie.id = movie_actor_through.movie_id
+			LEFT JOIN actor ON actor.id = movie_actor_through.actor_id
+		GROUP BY
+			movie.id
+		LIMIT ?, ?
+	`;
 
 	db.query(query, queryParams, (err, results) => {
 		if (err) {
