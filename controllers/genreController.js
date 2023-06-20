@@ -76,8 +76,4 @@ const getAllGenres = (req, res) => {
     });
 };
 
-const getMoviesByGenre = (req, res) => {
-	
-};
-
-module.exports = { getMoviesByGenre, getGenreById, getAllGenres };
+module.exports = { getGenreById, getAllGenres };
