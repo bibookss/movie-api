@@ -2,8 +2,9 @@ const db = require('../config/database');
 
 exports.getMovieById = (req, res) => {
 	const id = req.params.id;
+	const query = 'SELECT * FROM movie WHERE id = ?';
 
-	db.query('SELECT * FROM movie WHERE id = ?', [id], (err, results) => {
+	db.query(query, [id], (err, results) => {
 		if (err) {
 			console.error('Error executing query:', err);
 			res.status(500).json({ error: 'An error occurred.' });
@@ -18,7 +19,9 @@ exports.getMovieById = (req, res) => {
 };
 
 exports.getAllMovies = (req, res) => {	
-	db.query('SELECT * FROM movie', (err, results) => {
+	const query = 'SELECT * FROM movie';
+
+	db.query(query, (err, results) => {
 		if (err) {
 			console.error('Error executing query:', err);
 			res.status(500).json({ error: 'An error occurred.' });
